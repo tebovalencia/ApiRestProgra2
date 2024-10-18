@@ -74,7 +74,7 @@ public class Operaciones {
     @Path("/agregar")
     @Produces("application/json")
     @Consumes("application/json")
-    public int agregar(Usuarios u) {
+    public String agregar(Usuarios u) {
         String sql = "insert into usuarios(idUsuario,nombre, apellido, direccion, correo, telefono, password, rol, estado) values(?,?,?,?,?,?,?,?,?)";
 
         try {
@@ -91,11 +91,36 @@ public class Operaciones {
             ps.setInt(9, u.getEstado());
             ps.executeUpdate();
 
-            return 1;
+            return "Registor ingresado";
 
         } catch (Exception e) {
-            return 0;
+            return "Error al registrar";
         }
     }
 
+    @PUT
+    @Path("/modificar")
+
+    public String modificar(Usuarios u) {
+        String sql = "update usuarios set nombre=? , apellido=? , direccion=? , correo=? , telefono=? , rol=? , estado=? where idUsuario=?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
+
+            ps.setString(1, u.getNombre());
+            ps.setString(2, u.getApellido());
+            ps.setString(3, u.getDireccion());
+            ps.setString(4, u.getCorreo());
+            ps.setString(5, u.getTelefono());
+            ps.setInt(6, u.getRol());
+            ps.setInt(7, u.getEstado());
+            ps.setInt(8, u.getIdUsuario());
+            ps.executeUpdate();
+
+            return "Registro actualizado";
+        } catch (Exception e) {
+            return "Error";
+        }
+
+    }
 }
