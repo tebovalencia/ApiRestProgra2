@@ -18,6 +18,7 @@ import javax.ws.rs.PATCH;
 import javax.ws.rs.Path;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -122,5 +123,34 @@ public class Operaciones {
             return "Error";
         }
 
+    }
+    
+    @GET
+    @Path("/buscar/{nombre}")
+    public List<Usuarios> buscar(@PathParam("nombre") String idUsuario){
+        List<Usuarios> lista = new ArrayList<>();
+        String sql="Select * from Usuarios where nombre=?";
+        try{
+            con=cn.getConnection();
+            ps=con.prepareStatement(sql);
+            ps.setString(1, idUsuario);
+            rs=ps.executeQuery();
+            while(rs.next()){
+                Usuarios u=new Usuarios();
+                u.setApellido(rs.getString("apellido"));
+                u.setCorreo(rs.getString("correo"));
+                u.setDireccion(rs.getString("direccion"));
+                u.setEstado(rs.getInt("estado"));
+                u.setIdUsuario(rs.getInt("idUsuario"));
+                u.setNombre(rs.getString("nombre"));
+                u.setRol(rs.getInt("rol"));
+                u.setTelefono(rs.getString("telefono"));
+                lista.add(u);
+            }
+            
+        }
+        catch(Exception e){
+        }
+        return lista;
     }
 }
