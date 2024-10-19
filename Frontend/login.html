@@ -54,7 +54,8 @@
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block">Ingresar</button>
                                         <hr>
-                                        <div id="error-message" style="color: red; display: none;">Usuario o contraseña incorrecta.</div>
+                                        <!-- Mensajes de error -->
+                                        <div id="error-message" style="color: red; display: none;"></div>
                                     </form>
                                 </div>
                             </div>
@@ -88,6 +89,7 @@
             fetch(`http://localhost:8080/ServicioRestfull/webresources/generic/buscarUsuario/${email}`)
                 .then(response => response.json())
                 .then(data => {
+                    const errorMessage = document.getElementById('error-message');
                     if (data.length > 0) {
                         const user = data[0]; // Obtener al primer usuario
                         if (user.password === password) {
@@ -95,14 +97,21 @@
                             window.location.href = 'index.html';
                         } else {
                             // Contraseña incorrecta
-                            document.getElementById('error-message').style.display = 'block';
+                            errorMessage.textContent = 'Contraseña incorrecta.';
+                            errorMessage.style.display = 'block';
                         }
                     } else {
                         // Usuario no encontrado
-                        document.getElementById('error-message').style.display = 'block';
+                        errorMessage.textContent = 'Usuario no encontrado.';
+                        errorMessage.style.display = 'block';
                     }
                 })
-                .catch(error => console.error('Error:', error));
+                .catch(error => {
+                    const errorMessage = document.getElementById('error-message');
+                    errorMessage.textContent = 'Usuario no encontrado';
+                    errorMessage.style.display = 'block';
+                    console.error('Error:', error);
+                });
         });
     </script>
 
