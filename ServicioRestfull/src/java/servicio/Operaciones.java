@@ -7,6 +7,7 @@ package servicio;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ws.rs.core.Context;
@@ -21,6 +22,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  * REST Web Service
@@ -127,33 +129,47 @@ public class Operaciones {
     }
 
     @GET
-    @Path("/buscarUsuario/{correo}")
-    public List<Usuarios> buscar(@PathParam("correo") String idUsuario) {
-        List<Usuarios> lista = new ArrayList<>();
-        String sql = "Select * from Usuarios where correo=?";
-        try {
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setString(1, idUsuario);
-            rs = ps.executeQuery();
-            while (rs.next()) {
-                Usuarios u = new Usuarios();
-                u.setApellido(rs.getString("apellido"));
-                u.setCorreo(rs.getString("correo"));
-                u.setDireccion(rs.getString("direccion"));
-                u.setEstado(rs.getInt("estado"));
-                u.setIdUsuario(rs.getInt("idUsuario"));
-                u.setNombre(rs.getString("nombre"));
-                u.setRol(rs.getInt("rol"));
-                u.setTelefono(rs.getString("telefono"));
-                u.setPassword(rs.getString("password"));
-                lista.add(u);
-            }
-
-        } catch (Exception e) {
+@Path("/buscarUsuario/{correo}")
+@Produces(MediaType.APPLICATION_JSON)
+public Response buscar(@PathParam("correo") String correo) {
+    List<Usuarios> lista = new ArrayList<>();
+    String sql = "SELECT * FROM Usuarios WHERE correo=?";
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, correo);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Usuarios u = new Usuarios();
+            u.setApellido(rs.getString("apellido"));
+            u.setCorreo(rs.getString("correo"));
+            u.setDireccion(rs.getString("direccion"));
+            u.setEstado(rs.getInt("estado"));
+            u.setIdUsuario(rs.getInt("idUsuario"));
+            u.setNombre(rs.getString("nombre"));
+            u.setRol(rs.getInt("rol"));
+            u.setTelefono(rs.getString("telefono"));
+            u.setPassword(rs.getString("password"));
+            lista.add(u);
         }
-        return lista;
+    } catch (SQLException e) {
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("Error en la base de datos: " + e.getMessage())
+                       .build();
     }
+    
+    if (lista.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND)
+                       .entity("Usuario no encontrado")
+                       .build();
+    }
+
+    // Permitir CORS para solicitudes de cualquier origen
+    return Response.ok(lista)
+                   .header("Access-Control-Allow-Origin", "*") // Permite solicitudes desde cualquier origen
+                   .build();
+}
+
 
     @DELETE
     @Path("/EliminarUsuario/{id}")
