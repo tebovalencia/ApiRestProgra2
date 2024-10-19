@@ -67,13 +67,13 @@ public class Operaciones {
     }
 
     @GET
-    @Path("/lista")
+    @Path("/listaUsuario")
     public List<Usuarios> listar() {
         return (consultar());
     }
 
     @POST
-    @Path("/agregar")
+    @Path("/agregarUsuario")
     @Produces("application/json")
     @Consumes("application/json")
     public String agregar(Usuarios u) {
@@ -101,7 +101,7 @@ public class Operaciones {
     }
 
     @PUT
-    @Path("/modificar")
+    @Path("/modificarUsuario")
 
     public String modificar(Usuarios u) {
         String sql = "update usuarios set nombre=? , apellido=? , direccion=? , correo=? , telefono=? , rol=? , estado=? where idUsuario=?";
@@ -127,10 +127,10 @@ public class Operaciones {
     }
 
     @GET
-    @Path("/buscar/{nombre}")
-    public List<Usuarios> buscar(@PathParam("nombre") String idUsuario) {
+    @Path("/buscarUsuario/{correo}")
+    public List<Usuarios> buscar(@PathParam("correo") String idUsuario) {
         List<Usuarios> lista = new ArrayList<>();
-        String sql = "Select * from Usuarios where nombre=?";
+        String sql = "Select * from Usuarios where correo=?";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -146,6 +146,7 @@ public class Operaciones {
                 u.setNombre(rs.getString("nombre"));
                 u.setRol(rs.getInt("rol"));
                 u.setTelefono(rs.getString("telefono"));
+                u.setPassword(rs.getString("password"));
                 lista.add(u);
             }
 
@@ -155,7 +156,7 @@ public class Operaciones {
     }
 
     @DELETE
-    @Path("/Eliminar/{id}")
+    @Path("/EliminarUsuario/{id}")
     public String Eliminar(@PathParam("id") int id) {
         String sql = "delete from usuarios where idUsuario=?";
         try {

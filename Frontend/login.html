@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,9 +12,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="css/estilo.css"
-        rel="stylesheet">
+    <link href="css/estilo.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -42,15 +39,12 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Ingreso de Usuario</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" id="loginForm">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
-                                                placeholder="USUARIO">
+                                            <input type="email" class="form-control form-control-user" id="email" aria-describedby="emailHelp" placeholder="USUARIO">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="CONTRASEÑA">
+                                            <input type="password" class="form-control form-control-user" id="password" placeholder="CONTRASEÑA">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -58,13 +52,10 @@
                                                 <label class="custom-control-label" for="customCheck">Recordar</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Ingresar
-                                        </a>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block">Ingresar</button>
                                         <hr>
-                                        
+                                        <div id="error-message" style="color: red; display: none;">Usuario o contraseña incorrecta.</div>
                                     </form>
-                                    
                                 </div>
                             </div>
                         </div>
@@ -86,6 +77,34 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
+
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Evita que el formulario se envíe de forma tradicional
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Petición a la API para verificar el usuario
+            fetch(`http://localhost:8080/ServicioRestfull/webresources/generic/buscar/${email}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        const user = data[0]; // Obtener al primer usuario
+                        if (user.password === password) {
+                            // Contraseña correcta, redirigir a index.html
+                            window.location.href = 'index.html';
+                        } else {
+                            // Contraseña incorrecta
+                            document.getElementById('error-message').style.display = 'block';
+                        }
+                    } else {
+                        // Usuario no encontrado
+                        document.getElementById('error-message').style.display = 'block';
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+        });
+    </script>
 
 </body>
 
