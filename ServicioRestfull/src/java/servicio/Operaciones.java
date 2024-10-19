@@ -19,6 +19,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.core.MediaType;
 
 /**
@@ -124,19 +125,19 @@ public class Operaciones {
         }
 
     }
-    
+
     @GET
     @Path("/buscar/{nombre}")
-    public List<Usuarios> buscar(@PathParam("nombre") String idUsuario){
+    public List<Usuarios> buscar(@PathParam("nombre") String idUsuario) {
         List<Usuarios> lista = new ArrayList<>();
-        String sql="Select * from Usuarios where nombre=?";
-        try{
-            con=cn.getConnection();
-            ps=con.prepareStatement(sql);
+        String sql = "Select * from Usuarios where nombre=?";
+        try {
+            con = cn.getConnection();
+            ps = con.prepareStatement(sql);
             ps.setString(1, idUsuario);
-            rs=ps.executeQuery();
-            while(rs.next()){
-                Usuarios u=new Usuarios();
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Usuarios u = new Usuarios();
                 u.setApellido(rs.getString("apellido"));
                 u.setCorreo(rs.getString("correo"));
                 u.setDireccion(rs.getString("direccion"));
@@ -147,10 +148,26 @@ public class Operaciones {
                 u.setTelefono(rs.getString("telefono"));
                 lista.add(u);
             }
-            
-        }
-        catch(Exception e){
+
+        } catch (Exception e) {
         }
         return lista;
     }
+
+    @DELETE
+    @Path("/Eliminar/{id}")
+    public String Eliminar(@PathParam("id") int id) {
+        String sql = "delete from usuarios where idUsuario=?";
+        try {
+            con=cn.getConnection();
+            ps=con.prepareStatement(sql);
+            ps.setInt(1, id);
+            ps.executeUpdate();
+            return "Registro eliminado";
+
+        } catch (Exception e) {
+            return"Error";
+        }
+    }
+
 }
