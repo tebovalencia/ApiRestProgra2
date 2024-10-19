@@ -69,64 +69,97 @@ public class Operaciones {
     }
 
     @GET
-    @Path("/listaUsuario")
-    public List<Usuarios> listar() {
-        return (consultar());
-    }
+@Path("/listaUsuario")
+@Produces(MediaType.APPLICATION_JSON)
+public Response listar() {
+    List<Usuarios> usuarios = consultar();
+    
+    return Response.ok(usuarios)
+                   .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                   .build();
+}
+
 
     @POST
-    @Path("/agregarUsuario")
-    @Produces("application/json")
-    @Consumes("application/json")
-    public String agregar(Usuarios u) {
-        String sql = "insert into usuarios(idUsuario,nombre, apellido, direccion, correo, telefono, password, rol, estado) values(?,?,?,?,?,?,?,?,?)";
+@Path("/agregarUsuario")
+@Produces("application/json")
+@Consumes("application/json")
+public Response agregar(Usuarios u) {
+    String sql = "INSERT INTO usuarios(idUsuario,nombre, apellido, direccion, correo, telefono, password, rol, estado) VALUES(?,?,?,?,?,?,?,?,?)";
 
-        try {
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
-            ps.setInt(1, u.getIdUsuario());
-            ps.setString(2, u.getNombre());
-            ps.setString(3, u.getApellido());
-            ps.setString(4, u.getDireccion());
-            ps.setString(5, u.getCorreo());
-            ps.setString(6, u.getTelefono());
-            ps.setString(7, u.getPassword());
-            ps.setInt(8, u.getRol());
-            ps.setInt(9, u.getEstado());
-            ps.executeUpdate();
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, u.getIdUsuario());
+        ps.setString(2, u.getNombre());
+        ps.setString(3, u.getApellido());
+        ps.setString(4, u.getDireccion());
+        ps.setString(5, u.getCorreo());
+        ps.setString(6, u.getTelefono());
+        ps.setString(7, u.getPassword());
+        ps.setInt(8, u.getRol());
+        ps.setInt(9, u.getEstado());
+        ps.executeUpdate();
 
-            return "Registor ingresado";
+        // Respuesta exitosa con encabezados CORS
+        return Response.ok("{\"message\": \"Registro ingresado\"}")
+                       .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                       .build();
 
-        } catch (Exception e) {
-            return "Error al registrar";
-        }
+    } catch (SQLException e) {
+        // Manejo del error
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("{\"message\": \"Error al registrar: " + e.getMessage() + "\"}")
+                       .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                       .build();
     }
+}
+
 
     @PUT
-    @Path("/modificarUsuario")
+@Path("/modificarUsuario")
+@Produces("application/json")
+@Consumes("application/json")
+public Response modificar(Usuarios u) {
+    String sql = "UPDATE usuarios SET nombre=?, apellido=?, direccion=?, correo=?, telefono=?, rol=?, estado=? WHERE idUsuario=?";
+    
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
 
-    public String modificar(Usuarios u) {
-        String sql = "update usuarios set nombre=? , apellido=? , direccion=? , correo=? , telefono=? , rol=? , estado=? where idUsuario=?";
-        try {
-            con = cn.getConnection();
-            ps = con.prepareStatement(sql);
+        ps.setString(1, u.getNombre());
+        ps.setString(2, u.getApellido());
+        ps.setString(3, u.getDireccion());
+        ps.setString(4, u.getCorreo());
+        ps.setString(5, u.getTelefono());
+        ps.setInt(6, u.getRol());
+        ps.setInt(7, u.getEstado());
+        ps.setInt(8, u.getIdUsuario());
 
-            ps.setString(1, u.getNombre());
-            ps.setString(2, u.getApellido());
-            ps.setString(3, u.getDireccion());
-            ps.setString(4, u.getCorreo());
-            ps.setString(5, u.getTelefono());
-            ps.setInt(6, u.getRol());
-            ps.setInt(7, u.getEstado());
-            ps.setInt(8, u.getIdUsuario());
-            ps.executeUpdate();
-
-            return "Registro actualizado";
-        } catch (Exception e) {
-            return "Error";
+        int rowsUpdated = ps.executeUpdate();
+        
+        if (rowsUpdated > 0) {
+            // Si se actualizó al menos una fila, éxito
+            return Response.ok("{\"message\": \"Registro actualizado\"}")
+                           .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                           .build();
+        } else {
+            // No se encontró el usuario con ese id
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity("{\"message\": \"Usuario no encontrado\"}")
+                           .header("Access-Control-Allow-Origin", "*")
+                           .build();
         }
 
+    } catch (SQLException e) {
+        // Manejo de errores
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("{\"message\": \"Error al actualizar el registro: " + e.getMessage() + "\"}")
+                       .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                       .build();
     }
+}
+
 
     @GET
 @Path("/buscarUsuario/{correo}")
@@ -172,19 +205,39 @@ public Response buscar(@PathParam("correo") String correo) {
 
 
     @DELETE
-    @Path("/EliminarUsuario/{id}")
-    public String Eliminar(@PathParam("id") int id) {
-        String sql = "delete from usuarios where idUsuario=?";
-        try {
-            con=cn.getConnection();
-            ps=con.prepareStatement(sql);
-            ps.setInt(1, id);
-            ps.executeUpdate();
-            return "Registro eliminado";
+@Path("/EliminarUsuario/{id}")
+@Produces("application/json")
+public Response Eliminar(@PathParam("id") int id) {
+    String sql = "DELETE FROM usuarios WHERE idUsuario=?";
+    
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setInt(1, id);
 
-        } catch (Exception e) {
-            return"Error";
+        int rowsDeleted = ps.executeUpdate();
+        
+        if (rowsDeleted > 0) {
+            // Si se eliminó al menos una fila, éxito
+            return Response.ok("{\"message\": \"Registro eliminado\"}")
+                           .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                           .build();
+        } else {
+            // No se encontró el usuario con ese id
+            return Response.status(Response.Status.NOT_FOUND)
+                           .entity("{\"message\": \"Usuario no encontrado\"}")
+                           .header("Access-Control-Allow-Origin", "*")
+                           .build();
         }
+
+    } catch (SQLException e) {
+        // Manejo de errores
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("{\"message\": \"Error al eliminar el registro: " + e.getMessage() + "\"}")
+                       .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                       .build();
     }
+}
+
 
 }
