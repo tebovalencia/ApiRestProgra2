@@ -28,6 +28,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(Cita.CitaControlador.class);
         resources.add(Medicamento.MedicamentoControlador.class);
         resources.add(servicio.Operaciones.class);
     }
