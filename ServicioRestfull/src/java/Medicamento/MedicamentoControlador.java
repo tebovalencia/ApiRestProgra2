@@ -107,7 +107,7 @@ public class MedicamentoControlador {
     @Produces("application/json")
     @Consumes("application/json")
     public Response modificar(MedicamentoModelo me) {
-        String sql = "UPDATE Medicamento SET descipcion=?, getUnidadMedida=? WHERE idMedicamento=?";
+        String sql = "UPDATE Medicamento SET descipcion=?, unidadMedida=? WHERE idMedicamento=?";
 
         try {
             con = cn.getConnection();
@@ -178,7 +178,7 @@ public class MedicamentoControlador {
     }
 
     @DELETE
-    @Path("/Eliminar/{id}")
+    @Path("/eliminar/{id}")
     @Produces("application/json")
     public Response Eliminar(@PathParam("id") int id) {
         String sql = "DELETE FROM Medicamento WHERE idMedicamento=?";
