@@ -188,19 +188,10 @@
                                             
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mariano</td>
-                                            <td>Galvez</td>
-                                            <td>UMG</td>
-                                            <td>ejemplo@gmail.com</td>
-                                            <td>34567554</td>
-                                            <td>Admin</td>
-                                        </tr>
-                                       
-                                        
-                                    </tbody>
+                                </thead>
+                                <tbody id="usuariosTableBody">
+                                    <!-- Aquí se cargarán los datos dinámicamente -->
+                                </tbody>
                                     
                                 </table>
                                 <div class="card-body">
@@ -283,6 +274,41 @@
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // URL de la API que lista los usuarios
+            const apiUrl = 'http://localhost:8080/ServicioRestfull/webresources/generic/listaUsuario';
+
+            // Obtener el cuerpo de la tabla
+            const usuariosTableBody = document.getElementById('usuariosTableBody');
+
+            // Hacer la petición a la API
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    // Limpiar la tabla antes de agregar nuevos datos
+                    usuariosTableBody.innerHTML = '';
+
+                    // Recorrer los usuarios y agregarlos a la tabla
+                    data.forEach(usuario => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${usuario.idUsuario}</td>
+                            <td>${usuario.nombre}</td>
+                            <td>${usuario.apellido}</td>
+                            <td>${usuario.direccion}</td>
+                            <td>${usuario.correo}</td>
+                            <td>${usuario.telefono}</td>
+                            <td>${usuario.rol}</td>
+                        `;
+                        usuariosTableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Error al cargar los usuarios:', error));
+        });
+    </script>
+     
 
 </body>
 
