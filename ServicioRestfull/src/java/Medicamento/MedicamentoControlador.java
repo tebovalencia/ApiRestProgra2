@@ -144,13 +144,13 @@ public class MedicamentoControlador {
     @GET
     @Path("/buscar/{descipcion}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response buscar(@PathParam("correo") String correo) {
+    public Response buscar(@PathParam("descipcion") String descipcion) {
         List<MedicamentoModelo> lista = new ArrayList<>();
         String sql = "SELECT * FROM Medicamento WHERE descipcion=?";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
-            ps.setString(1, correo);
+            ps.setString(1, descipcion);
             rs = ps.executeQuery();
             while (rs.next()) {
                 MedicamentoModelo me = new MedicamentoModelo();
