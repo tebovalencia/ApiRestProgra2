@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>CLINICA - INICIO</title>
+    <title>CLINICA - MEDICAMENTOS</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -74,9 +74,6 @@
                 </div>
             </li>
 
-            
-
-            
             <hr class="sidebar-divider d-none d-md-block">
 
             
@@ -104,7 +101,7 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <!-- Topbar Search -->
+                    <!-- Topbar Search 
                     <form
                         class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
@@ -116,13 +113,13 @@
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form>-->
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
 
 
-                                            
+                        
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -146,7 +143,7 @@
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Cerrar Sesion
-                                </a>
+                                </a> 
                             </div>
                         </li>
 
@@ -160,30 +157,26 @@
 
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">INICIO</h1>
-                        <!--<a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
-                                class="fas fa-download fa-sm text-white-50"></i>Generar Reporte</a>-->
+                        <h1 class="h3 mb-0 text-gray-800">Medicamentos</h1>
+                       
                     </div>
 
-                    <!-- Content Row -->
-                
+                    
 
                     <!-- Content Row -->
 
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Citas</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Medicamentos</h6>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>ID-CITA</th>
-                                            <th>Dependiente</th>
-                                            <th>Usuario</th>
-                                            <th>Fecha y Hora</th>
-                                            <th>Comentarios</th>
+                                            <th>ID-MEDICAMENTO</th>
+                                            <th>DESCRIPCION</th>
+                                            <th>UNIDAD DE MEDIDA</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
@@ -194,17 +187,34 @@
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td>Mariano</td>
-                                            <td>Galvez</td>
-                                            <td>12/12/12</td>
-                                            <td>Casi muerto</td>
+                                            <td>SUSPENCION</td>
+                                            <td>ML</td>
                                         </tr>
                                        
                                         
                                     </tbody>
                                     
                                 </table>
-                                
+                                <div class="card-body">
+                                    <a href="nueva_cita.html" class="btn btn-primary btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-flag"></i>
+                                        </span>
+                                        <span class="text">Nuevo Medicamento</span>
+                                    </a>
+                                    <a href="#" class="btn btn-danger btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-trash"></i>
+                                        </span>
+                                        <span class="text">Eliminar Medicamento</span>
+                                    </a>
+                                    <a href="#" class="btn btn-warning btn-icon-split">
+                                        <span class="icon text-white-50">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                        </span>
+                                        <span class="text">Editar Medicamento</span>
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </div>
