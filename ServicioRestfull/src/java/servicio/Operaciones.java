@@ -29,7 +29,7 @@ import javax.ws.rs.core.Response;
  *
  * @author estebanvalencia
  */
-@Path("generic")
+@Path("Usuarios")
 public class Operaciones {
 
     Conexion cn = new Conexion();

@@ -86,7 +86,7 @@
             const password = document.getElementById('password').value;
 
             // Petición a la API para verificar el usuario
-            fetch(`http://localhost:8080/ServicioRestfull/webresources/generic/buscarUsuario/${email}`)
+            fetch(`http://localhost:8080/ServicioRestfull/webresources/Usuarios/buscarUsuario/${email}`)
                 .then(response => response.json())
                 .then(data => {
                     const errorMessage = document.getElementById('error-message');
