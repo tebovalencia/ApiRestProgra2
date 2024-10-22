@@ -21,6 +21,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.DELETE;
+import javax.ws.rs.OPTIONS;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -29,6 +30,8 @@ import javax.ws.rs.core.Response;
  *
  * @author estebanvalencia
  */
+
+
 @Path("Usuarios")
 public class Operaciones {
 
@@ -67,6 +70,17 @@ public class Operaciones {
             return lista;
         }
     }
+    
+    
+    @OPTIONS
+@Path("{path : .*}")
+public Response handlePreflight() {
+    return Response.ok()
+            .header("Access-Control-Allow-Origin", "*")  // Permitir cualquier origen
+            .header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, DELETE")  // Métodos permitidos
+            .header("Access-Control-Allow-Headers", "Content-Type, Authorization")  // Headers permitidos
+            .build();
+}
 
     @GET
 @Path("/listaUsuario")
@@ -103,14 +117,18 @@ public Response agregar(Usuarios u) {
 
         // Respuesta exitosa con encabezados CORS
         return Response.ok("{\"message\": \"Registro ingresado\"}")
-                       .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                       .header("Access-Control-Allow-Origin", "*") // Permitir cualquier origen
+                       .header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+                       .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
                        .build();
 
     } catch (SQLException e) {
         // Manejo del error
         return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
                        .entity("{\"message\": \"Error al registrar: " + e.getMessage() + "\"}")
-                       .header("Access-Control-Allow-Origin", "*") // Permitir CORS
+                       .header("Access-Control-Allow-Origin", "*") // Permitir cualquier origen
+                       .header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")
+                       .header("Access-Control-Allow-Headers", "Content-Type, Authorization")
                        .build();
     }
 }
