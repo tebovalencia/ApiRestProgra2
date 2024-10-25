@@ -440,10 +440,8 @@
 
                     // Cargar los usuarios al inicio
                     cargarUsuarios();
-                });
 
-
-                // Función para eliminar un usuario
+                    // Función para eliminar un usuario
                 function eliminarUsuario(id) {
                     const apiUrlEliminar = `http://192.168.1.106:8080/ServicioRestfull/webresources/Usuarios/EliminarUsuario/${id}`;
 
@@ -465,6 +463,10 @@
                             .catch(error => console.error('Error al eliminar el usuario:', error));
                     }
                 }
+                });
+
+
+                
             </script>
 
 
