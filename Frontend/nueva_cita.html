@@ -185,12 +185,13 @@
                                     </div>
                                     
                                     <div class="form-group">
-                                        <a href="#" class="btn btn-primary btn-icon-split">
+                                        <a href="#" id="guardarCitaBtn" class="btn btn-primary btn-icon-split">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-flag"></i>
                                             </span>
                                             <span class="text">Guardar</span>
                                         </a>
+                                        
                                         <a href="cita.html" class="btn btn-danger btn-icon-split">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-trash"></i>
@@ -268,6 +269,40 @@
 
             <!-- Page level custom scripts -->
             <script src="js/demo/datatables-demo.js"></script>
+
+            <script>
+                document.getElementById("guardarCitaBtn").addEventListener("click", function(event) {
+                    event.preventDefault(); // Evita que la página se recargue
+            
+                    // Obtener valores del formulario
+                    const dependiente = document.getElementById("dependiente").value;
+                    const idUsuario = document.getElementById("usuario").value;
+                    const fechahora = document.getElementById("fechor").value;
+            
+                    // Construir el objeto de datos
+                    const citaData = {
+                        dependiente: dependiente,
+                        idUsuario: parseInt(idUsuario), // Convertir a entero si es necesario
+                        fechahora: fechahora
+                    };
+            
+                    // Enviar solicitud POST a la API
+                    fetch("http://localhost:8080/ServicioRestfull/webresources/Cita/agregar/", {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify(citaData)
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message); // Mensaje de respuesta de la API
+                        window.location.href = "cita.html"; // Redireccionar si es necesario
+                    })
+                    .catch(error => console.error("Error al registrar la cita:", error));
+                });
+            </script>
+            
 
 </body>
 
