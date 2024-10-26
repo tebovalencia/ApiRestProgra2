@@ -94,6 +94,24 @@ public class CitaModelo {
         this.comentarios = comentarios;
     }
 
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    public String getApellidoUsuario() {
+        return apellidoUsuario;
+    }
+
+    public void setApellidoUsuario(String apellidoUsuario) {
+        this.apellidoUsuario = apellidoUsuario;
+    }
+    
+    
+
     public CitaModelo() {
     }
     private int idCita;
@@ -102,4 +120,6 @@ public class CitaModelo {
     private String fechahora;
     private String comentarios;
     private int estado;
+    private String nombreUsuario;
+    private String apellidoUsuario;
 }

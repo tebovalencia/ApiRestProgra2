@@ -198,12 +198,7 @@
                                         </span>
                                         <span class="text">Nuevo Usuario</span>
                                     </a>
-                                    <a href="#" class="btn btn-danger btn-icon-split">
-                                        <span class="icon text-white-50">
-                                            <i class="fas fa-trash"></i>
-                                        </span>
-                                        <span class="text">Eliminar Usuario</span>
-                                    </a>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -566,7 +561,7 @@
                     };
 
                     // PUT request para actualizar los datos del usuario
-                    const apiUrlModificar = `http://localhost:8080/ServicioRestfull/webresources/Usuarios/EliminarUsuario/${id}`;
+                    const apiUrlModificar = `http://localhost:8080/ServicioRestfull/webresources/Usuarios/ModificarUsuario/${id}`;
 
                     fetch(`${apiUrlModificar}/${userId}`, {
                         method: 'PUT',

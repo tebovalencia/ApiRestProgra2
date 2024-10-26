@@ -13,9 +13,7 @@
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link
-        href="css/estilo.css"
-        rel="stylesheet">
+    <link href="css/estilo.css" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
@@ -66,7 +64,7 @@
                 </a>
                 <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Componentes</h6>
+                        <!--<h6 class="collapse-header">Componentes</h6>-->
                         <a class="collapse-item" href="usuarios.html">Usuarios</a>
                         <a class="collapse-item" href="cita.html">Citas</a>
                         <a class="collapse-item" href="medicamento.html">Medicamentos</a>
@@ -76,13 +74,13 @@
 
             <hr class="sidebar-divider d-none d-md-block">
 
-            
+
             <div class="text-center d-none d-md-inline">
                 <button class="rounded-circle border-0" id="sidebarToggle"></button>
             </div>
 
             <!-- Sidebar Message -->
-            
+
 
         </ul>
         <!-- End of Sidebar -->
@@ -119,7 +117,7 @@
                     <ul class="navbar-nav ml-auto">
 
 
-                        
+
 
                         <div class="topbar-divider d-none d-sm-block"></div>
 
@@ -127,9 +125,8 @@
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Usuario</span>
-                                <img class="img-profile rounded-circle"
-                                    src="images/undraw_profile.svg">
+                                <span class="mr-2 d-none d-lg-inline text-gray-600 small">citas</span>
+                                <img class="img-profile rounded-circle" src="images/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
@@ -138,12 +135,12 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Perfil
                                 </a>-->
-                                
-                                
+
+
                                 <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Cerrar Sesion
-                                </a> 
+                                </a>
                             </div>
                         </li>
 
@@ -158,11 +155,11 @@
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Citas</h1>
-                       <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
                                 class="fas fa-download fa-sm text-white-50"></i> Generar Reporte </a>
                     </div>
 
-                    
+
 
                     <!-- Content Row -->
 
@@ -177,28 +174,22 @@
                                         <tr>
                                             <th>ID-CITA</th>
                                             <th>Dependiente</th>
-                                            <th>Usuario</th>
+                                            <th>Nombre</th>
+                                            <th>Apellido</th>
                                             <th>Fecha y Hora</th>
                                             <th>Comentarios</th>
                                         </tr>
                                     </thead>
+                                    <tbody id="citasTableBody">
+                                        <!-- Aquí se cargarán los datos dinámicamente -->
+                                    </tbody>
                                     <tfoot>
                                         <tr>
-                                            
+
                                         </tr>
                                     </tfoot>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mariano</td>
-                                            <td>Galvez</td>
-                                            <td>12/12/12</td>
-                                            <td>Casi muerto</td>
-                                        </tr>
-                                       
-                                        
-                                    </tbody>
-                                    
+
+
                                 </table>
                                 <div class="card-body">
                                     <a href="nueva_cita.html" class="btn btn-primary btn-icon-split">
@@ -223,69 +214,137 @@
                             </div>
                         </div>
                     </div>
-        </div>
-        <!-- End of Content Wrapper -->
-
-    </div>
-    <!-- End of Page Wrapper -->
-
-    <!-- Scroll to Top Button-->
-     <!-- Footer -->
-     <footer class="sticky-footer bg-white">
-        <div class="container my-auto">
-            <div class="copyright text-center my-auto">
-                <span>Derechos Reservados &copy; Estudiantes UMG 2024</span>
-            </div>
-        </div>
-    </footer>
-    <!-- End of Footer -->
-    <a class="scroll-to-top rounded" href="#page-top">
-        <i class="fas fa-angle-up"></i>
-    </a>
-
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Seguro(a)?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
                 </div>
-                <div class="modal-body">Estas seguro(a) de cerrar sesion.</div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
-                    <a class="btn btn-primary" href="login.html">Cerrar Sesion</a>
+                <!-- End of Content Wrapper -->
+
+            </div>
+            <!-- End of Page Wrapper -->
+
+            <!-- Scroll to Top Button-->
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Derechos Reservados &copy; Estudiantes UMG 2024</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+            <a class="scroll-to-top rounded" href="#page-top">
+                <i class="fas fa-angle-up"></i>
+            </a>
+
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Seguro(a)?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Estas seguro(a) de cerrar sesion.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancelar</button>
+                            <a class="btn btn-primary" href="login.html">Cerrar Sesion</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- Modal para agregar una nueva cita -->
+            <div class="modal" id="nuevaCitaModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Agregar Nueva Cita</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="nuevaCitaForm">
+                                <div class="form-group">
+                                    <label for="dependiente">Dependiente</label>
+                                    <input type="text" class="form-control" id="dependiente" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="idUsuario">id usuario</label>
+                                    <input type="text" class="form-control" id="idUsuario" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="comentarios">comentarios</label>
+                                    <input type="text" class="form-control" id="comentarios" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+            <!-- Bootstrap core JavaScript-->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+            <!-- Core plugin JavaScript-->
+            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+            <!-- Custom scripts for all pages-->
+            <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Page level plugins -->
-    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+            <!-- Page level plugins -->
+            <script src="vendor/chart.js/Chart.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+            <!-- Page level plugins -->
+            <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+            <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-    <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+            <!-- Page level custom scripts -->
+            <script src="js/demo/chart-area-demo.js"></script>
+            <script src="js/demo/chart-pie-demo.js"></script>
+
+            <!-- Page level custom scripts -->
+            <script src="js/demo/datatables-demo.js"></script>
+
+            <script>
+
+                document.addEventListener('DOMContentLoaded', function () {
+                    // URL de la API que lista los citass
+                    const apiUrl = 'http://localhost:8080/ServicioRestfull/webresources/Cita/lista';
+
+                    // Obtener el cuerpo de la tabla
+                    const citasTableBody = document.getElementById('citasTableBody');
+
+                    // Hacer la petición a la API
+                    fetch(apiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Limpiar la tabla antes de agregar nuevos datos
+                            citasTableBody.innerHTML = '';
+
+                            // Recorrer los citas y agregarlos a la tabla
+                            data.forEach(citas => {
+                                const row = document.createElement('tr');
+                                row.innerHTML = `
+                            <td>${citas.idCita}</td>
+                            <td>${citas.dependiente}</td>
+                            <td>${citas.nombreUsuario}</td>
+                            <td>${citas.apellidoUsuario}</td>
+                            <td>${citas.fechahora}</td>
+                            <td>${citas.comentarios}</td>
+                            
+
+                        `;
+                                citasTableBody.appendChild(row);
+                            });
+                        })
+                        .catch(error => console.error('Error al cargar los citas:', error));
+                });
+            </script>
+            </script>
 
 </body>
 

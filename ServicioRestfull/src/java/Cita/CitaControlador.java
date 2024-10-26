@@ -42,7 +42,7 @@ public class CitaControlador {
     public List<CitaModelo> consultar() {
         List<CitaModelo> lista = new ArrayList<>();
 
-        String sql = "select * from Cita";
+        String sql = "SELECT cita.* , usuarios.nombre , usuarios.apellido FROM cita JOIN usuarios ON cita.idUsuario = usuarios.idUsuario;";
         try {
             con = cn.getConnection();
             ps = con.prepareStatement(sql);
@@ -54,6 +54,9 @@ public class CitaControlador {
                 obj.setIdUsuario(rs.getInt("idUsuario"));
                 obj.setFechahora(rs.getString("fechahora"));
                 obj.setEstado(rs.getInt("estado"));
+                obj.setNombreUsuario(rs.getString("nombre"));
+                obj.setApellidoUsuario(rs.getString("apellido"));
+                obj.setComentarios(rs.getString("comentarios"));
                 lista.add(obj);
             }
             return lista;
@@ -121,10 +124,10 @@ public class CitaControlador {
 
             ps.close();
             con.close();
-            
+
             if (rowsUpdated > 0) {
                 // Si se actualizó al menos una fila, éxito
-                return Response.ok("{\"message\": \"Registro actualizado "+obj.getComentarios()+"\"}")
+                return Response.ok("{\"message\": \"Registro actualizado " + obj.getComentarios() + "\"}")
                         .header("Access-Control-Allow-Origin", "*") // Permitir CORS
                         .build();
             } else {
