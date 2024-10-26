@@ -454,6 +454,8 @@
                                 data.forEach(usuario => {
                                     // Crear la fila y configurar el HTML de cada celda, incluyendo el botón de eliminar
                                     const row = document.createElement('tr');
+                                    const rol = usuario.rol === 1 ? "Paciente" : usuario.rol === 2 ? "Médico" : "Desconocido"; // Nueva línea para transformar el rol
+
                                     row.innerHTML = `
                     <td>${usuario.idUsuario}</td>
                     <td>${usuario.nombre}</td>
@@ -461,12 +463,8 @@
                     <td>${usuario.direccion}</td>
                     <td>${usuario.correo}</td>
                     <td>${usuario.telefono}</td>
-                    <td>${usuario.rol}</td>
+                    <td>${rol}</td>
                     <td>
-                        <button class="btn btn-primary btn-sm editar-btn" data-id="${usuario.idUsuario}" onclick="abrirModalEditar(${usuario.idUsuario})">
-
-                            Modificar
-                        </button>
                         <button class="btn btn-danger btn-sm eliminar-btn" data-id="${usuario.idUsuario}">
                             Eliminar
                         </button>

@@ -180,8 +180,9 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="inputAddress">Comentarios</label>
-                                        <textarea class="form-control" aria-label="With textarea"></textarea>
+                                        <label>Comentarios</label>
+                                        <input type="text" class="form-control" id="comentario"
+                                                placeholder="comentarios">
                                     </div>
                                     
                                     <div class="form-group">
@@ -278,12 +279,14 @@
                     const dependiente = document.getElementById("dependiente").value;
                     const idUsuario = document.getElementById("usuario").value;
                     const fechahora = document.getElementById("fechor").value;
+                    const comentario = document.getElementById("comentario").value;
             
                     // Construir el objeto de datos
                     const citaData = {
                         dependiente: dependiente,
                         idUsuario: parseInt(idUsuario), // Convertir a entero si es necesario
-                        fechahora: fechahora
+                        fechahora: fechahora,
+                        comentarios: comentario
                     };
             
                     // Enviar solicitud POST a la API

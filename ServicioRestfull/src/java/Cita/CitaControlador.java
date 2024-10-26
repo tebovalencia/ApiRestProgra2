@@ -82,7 +82,7 @@ public class CitaControlador {
     @Produces("application/json")
     @Consumes("application/json")
     public Response agregar(CitaModelo obj) {
-        String sql = "INSERT INTO cita(dependiente, idUsuario,fechahora) VALUES(?,?,?)";
+        String sql = "INSERT INTO cita(dependiente, idUsuario,fechahora, comentarios) VALUES(?,?,?,?)";
 
         try {
             con = cn.getConnection();
@@ -90,6 +90,7 @@ public class CitaControlador {
             ps.setString(1, obj.getDependiente());
             ps.setInt(2, obj.getIdUsuario());
             ps.setString(3, obj.getFechahora());
+            ps.setString(4, obj.getComentarios());
             ps.executeUpdate();
 
             // Respuesta exitosa con encabezados CORS
