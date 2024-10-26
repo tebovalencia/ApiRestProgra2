@@ -480,13 +480,7 @@
                                     usuariosTableBody.appendChild(row);
                                 });
 
-                                // Event listeners para cada botón de modificar y eliminar
-                                document.querySelectorAll('.modificar-btn').forEach(button => {
-                                    button.addEventListener('click', function () {
-                                        const userId = this.getAttribute('id');
-                                        abrirModalEditar(userId);
-                                    });
-                                });
+                               
 
 
                                 // Agregar eventos a cada botón de eliminar

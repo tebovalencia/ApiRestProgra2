@@ -224,25 +224,23 @@ public Response buscar(@PathParam("correo") String correo) {
    @GET
 @Path("/buscarUsuarioid/{usuario}")
 @Produces(MediaType.APPLICATION_JSON)
-public Response buscarid(@PathParam("usuario") String idUsuario) {
+public Response buscarid(@PathParam("usuario") int idUsuario) {
     List<Usuarios> lista = new ArrayList<>();
     String sql = "SELECT * FROM Usuarios WHERE idUsuario=?";
     try {
         con = cn.getConnection();
         ps = con.prepareStatement(sql);
-        ps.setString(1, idUsuario);
+        ps.setInt(1, idUsuario);
         rs = ps.executeQuery();
         while (rs.next()) {
             Usuarios u = new Usuarios();
             u.setApellido(rs.getString("apellido"));
             u.setCorreo(rs.getString("correo"));
             u.setDireccion(rs.getString("direccion"));
-            u.setEstado(rs.getInt("estado"));
             u.setIdUsuario(rs.getInt("idUsuario"));
             u.setNombre(rs.getString("nombre"));
             u.setRol(rs.getInt("rol"));
             u.setTelefono(rs.getString("telefono"));
-            u.setPassword(rs.getString("password"));
             lista.add(u);
         }
     } catch (SQLException e) {
