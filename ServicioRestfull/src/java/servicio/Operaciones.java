@@ -221,6 +221,48 @@ public Response buscar(@PathParam("correo") String correo) {
                    .build();
 }
 
+   @GET
+@Path("/buscarUsuarioid/{usuario}")
+@Produces(MediaType.APPLICATION_JSON)
+public Response buscarid(@PathParam("usuario") String idUsuario) {
+    List<Usuarios> lista = new ArrayList<>();
+    String sql = "SELECT * FROM Usuarios WHERE idUsuario=?";
+    try {
+        con = cn.getConnection();
+        ps = con.prepareStatement(sql);
+        ps.setString(1, idUsuario);
+        rs = ps.executeQuery();
+        while (rs.next()) {
+            Usuarios u = new Usuarios();
+            u.setApellido(rs.getString("apellido"));
+            u.setCorreo(rs.getString("correo"));
+            u.setDireccion(rs.getString("direccion"));
+            u.setEstado(rs.getInt("estado"));
+            u.setIdUsuario(rs.getInt("idUsuario"));
+            u.setNombre(rs.getString("nombre"));
+            u.setRol(rs.getInt("rol"));
+            u.setTelefono(rs.getString("telefono"));
+            u.setPassword(rs.getString("password"));
+            lista.add(u);
+        }
+    } catch (SQLException e) {
+        return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+                       .entity("Error en la base de datos: " + e.getMessage())
+                       .build();
+    }
+    
+    if (lista.isEmpty()) {
+        return Response.status(Response.Status.NOT_FOUND)
+                       .entity("Usuario no encontrado")
+                       .build();
+    }
+
+    // Permitir CORS para solicitudes de cualquier origen
+    return Response.ok(lista)
+                   .header("Access-Control-Allow-Origin", "*") // Permite solicitudes desde cualquier origen
+                   .build();
+}
+
 
     @DELETE
 @Path("/EliminarUsuario/{id}")
