@@ -18,7 +18,7 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
+
 
 </head>
 
@@ -165,26 +165,33 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-4">
                                             <label>Dependiente</label>
-                                            <input type="text" class="form-control" id="dependiente"
-                                                placeholder="Dependiente">
+                                            <!-- Convertimos el campo de texto en un desplegable -->
+                                            <select class="form-control" id="dependiente">
+                                                <option value="">Seleccione un médico</option>
+                                            </select>
                                         </div>
                                         <div class="form-group col-md-4">
                                             <label>Usuario</label>
-                                            <input type="text" class="form-control" id="usuario"
-                                                placeholder="Usuario">
+                                            <input type="text" class="form-control" id="usuario" placeholder="Usuario">
                                         </div>
-                                        <div class="form-group col-md-4">
-                                            <label>Fecha y Hora</label>
-                                            <input type="datetime" class="form-control" id="fechor"
+                                        <label>Fecha y Hora</label>
+                                        <div class="input-group">
+                                            <input type="datetime-local" class="form-control" id="fechor"
                                                 placeholder="Fecha y Hora">
+                                            <div class="input-group-append">
+                                                <button class="btn btn-secondary" type="button"
+                                                    onclick="document.getElementById('fechor').showPicker();">
+                                                    <i class="fas fa-calendar-alt"></i>
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label>Comentarios</label>
                                         <input type="text" class="form-control" id="comentario"
-                                                placeholder="comentarios">
+                                            placeholder="comentarios">
                                     </div>
-                                    
+
                                     <div class="form-group">
                                         <a href="#" id="guardarCitaBtn" class="btn btn-primary btn-icon-split">
                                             <span class="icon text-white-50">
@@ -192,7 +199,7 @@
                                             </span>
                                             <span class="text">Guardar</span>
                                         </a>
-                                        
+
                                         <a href="cita.html" class="btn btn-danger btn-icon-split">
                                             <span class="icon text-white-50">
                                                 <i class="fas fa-trash"></i>
@@ -244,8 +251,8 @@
                 </div>
             </div>
 
-        
- 
+
+
 
             <!-- Bootstrap core JavaScript-->
             <script src="vendor/jquery/jquery.min.js"></script>
@@ -272,15 +279,15 @@
             <script src="js/demo/datatables-demo.js"></script>
 
             <script>
-                document.getElementById("guardarCitaBtn").addEventListener("click", function(event) {
+                document.getElementById("guardarCitaBtn").addEventListener("click", function (event) {
                     event.preventDefault(); // Evita que la página se recargue
-            
+
                     // Obtener valores del formulario
                     const dependiente = document.getElementById("dependiente").value;
                     const idUsuario = document.getElementById("usuario").value;
                     const fechahora = document.getElementById("fechor").value;
                     const comentario = document.getElementById("comentario").value;
-            
+
                     // Construir el objeto de datos
                     const citaData = {
                         dependiente: dependiente,
@@ -288,7 +295,7 @@
                         fechahora: fechahora,
                         comentarios: comentario
                     };
-            
+
                     // Enviar solicitud POST a la API
                     fetch("http://localhost:8080/ServicioRestfull/webresources/Cita/agregar/", {
                         method: "POST",
@@ -297,15 +304,44 @@
                         },
                         body: JSON.stringify(citaData)
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message); // Mensaje de respuesta de la API
-                        window.location.href = "cita.html"; // Redireccionar si es necesario
-                    })
-                    .catch(error => console.error("Error al registrar la cita:", error));
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message); // Mensaje de respuesta de la API
+                            window.location.href = "cita.html"; // Redireccionar si es necesario
+                        })
+                        .catch(error => console.error("Error al registrar la cita:", error));
                 });
+
+
+
+                function cargarUsuariosMedicos() {
+                    const apiUrl = 'http://localhost:8080/ServicioRestfull/webresources/Usuarios/listaUsuario';
+
+                    fetch(apiUrl)
+                        .then(response => response.json())
+                        .then(data => {
+                            const dependienteSelect = document.getElementById('dependiente');
+                            dependienteSelect.innerHTML = '<option value="">Seleccione un médico</option>';
+
+                            // Filtra solo los usuarios con rol "2"
+                            data.filter(usuario => usuario.rol === 2)
+                                .forEach(usuario => {
+                                    const option = document.createElement('option');
+                                    option.value = usuario.idUsuario;
+                                    option.textContent = `${usuario.nombre} ${usuario.apellido}`;
+                                    dependienteSelect.appendChild(option);
+                                });
+                        })
+                        .catch(error => console.error("Error al cargar los usuarios médicos:", error));
+                }
+
+                document.addEventListener('DOMContentLoaded', cargarUsuariosMedicos);
+
+
+
+
             </script>
-            
+
 
 </body>
 
